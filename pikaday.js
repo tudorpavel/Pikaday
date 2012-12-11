@@ -337,6 +337,54 @@
         return html += '</div>';
     },
 
+    renderTimeInput = function(opts, data)
+    {
+      var html = '', max = 0,
+        inputs = ['hour', 'minute', 'second'];
+
+      for(var i = 0; i < inputs.length; i++)
+      {
+        if (i == 0) {
+          max = 23;
+        } else {
+          max = 59;
+        }
+        html += '<td data-' + inputs[i] +'="0"><input type="number" class="pika-' + inputs[i] + '" min="0" max="' + max + '" step="' + opts.incrementStep + '" value="0"></td>';
+      }
+
+      if (opts.showMeridian) {
+        html += '<td data-meridian="true"><button class="pika-meridian" type="button">PM</button></td>';
+      }
+
+      return html;
+    },
+
+    renderTimeTitles = function(opts)
+    {
+      var html = '',
+        titles = opts.i18n.timeTitles;
+
+      for(var i = 0; i < titles.length; i++)
+      {
+        html += '<th scope="col">' + titles[i] + '</th>';
+      }
+
+      if (opts.showMeridian) {
+        html += '<th scope="col">&nbsp;</th>';
+      }
+
+      return html;
+    },
+
+    renderTimeTable = function(opts)
+    {
+      return '<table cellpadding="0" cellspacing="0" class="pika-table"><thead><tr>' +
+        renderTimeTitles(opts) +
+        '</tr></thead><tbody><tr>' +
+        renderTimeInput(opts) +
+        '</tr></tbody></table>';
+    },
+
     renderTable = function(opts, data)
     {
         return '<table cellpadding="0" cellspacing="0" class="pika-table">' + renderHead(opts) + renderBody(data) + '</table>';
@@ -860,7 +908,12 @@
                     r = 0;
                 }
             }
-            return renderTable(opts, data);
+
+            if (opts.showTimePicker) {
+              return renderTable(opts, data) + renderTimeTable(opts, data);
+            } else {
+              return renderTable(opts, data);
+            }
         },
 
         isVisible: function()
