@@ -584,7 +584,7 @@
                 }
                 opts.setDefaultDate = true;
 
-                if (!opts.defaultTime && !isDate(Date.parse(opts.field.value))) {
+                if (!opts.defaultTime && !isDate(opts.defaultDate)) {
                     opts.defaultTime = new Date();
                 } else {
                     opts.defaultTime = opts.defaultDate;
