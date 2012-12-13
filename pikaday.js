@@ -217,7 +217,7 @@
         },
 
         // time picker
-        showTimePicker: true,
+        showTimePicker: false,
         minuteStep: 1,
         defaultTime: false, // set a `Date` object to change
         showMeridian: true,
@@ -973,7 +973,7 @@
                 data   = [],
                 row    = [];
 
-            if (!this._o.showTimePicker) {
+            if (!this._o.showTimePicker && isDate(this._d)) {
                 this._d.setHours(0,0,0,0);
             }
 
